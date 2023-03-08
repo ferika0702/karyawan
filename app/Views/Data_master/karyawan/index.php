@@ -30,10 +30,10 @@
                     <th class="text-center" width="5%">No</th>
                     <th class="text-center" width="30%">Nama</th>
                     <th class="text-center" width="10%">Jabatan</th>
-                    <th class="text-center" width="15%">Pendidikan</th>
+                    <th class="text-center" width="10%">Pendidikan</th>
                     <th class="text-center" width="10%">No Telepon</th>
-                    <th class="text-center" width="10%">Email</th>
-                    <th class="text-center" width="20%">Aksi</th>
+                    <th class="text-center" width="20%">Email</th>
+                    <th class="text-center" width="15%">Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -144,16 +144,17 @@
 
     function showModalEdit(id) {
         $.ajax({
-            type: 'put',
-            url: '<?= site_url() ?>karyawan/'+id,
+            type: 'GET',
+            url: '<?= site_url() ?>karyawan/'+id+'/edit',
             dataType: 'json',
             success: function(res) {
                 if (res.data) {
-                    $('#isiModal').html(res.data)
+                    $('#isiForm').html(res.data)
                     $('#my-modal').modal('toggle')
                     $('#judulModal').html('Edit Karyawan')
+                    console.log(res.data)
                 }else{
-                    console.log(res)
+                    console.log("error")
                 }
             },
             error: function(e) {

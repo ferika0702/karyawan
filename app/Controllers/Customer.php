@@ -182,6 +182,7 @@ class Customer extends ResourcePresenter
 
     public function update($id = null)
     {
+        dd('test coba');
         $modelCustomer = new CustomerModel();
         $old_customer = $modelCustomer->find($id);
 

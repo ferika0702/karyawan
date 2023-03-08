@@ -18,6 +18,14 @@
     </div>
 
     <div class="row mb-3">
+        <label for="jabatan" class="col-sm-3 col-form-label">Jabatan</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" id="jabatan" name="jabatan" autofocus>
+            <div class="invalid-feedback error-jabatan"></div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
         <label for="alamat" class="col-sm-3 col-form-label">Alamat</label>
         <div class="col-sm-9">
             <input type="text" class="form-control" id="alamat" name="alamat" autofocus>
@@ -48,7 +56,7 @@
     <div class="row mb-3">
         <label for="tanggal_lahir" class="col-sm-3 col-form-label">Tanggal Lahir</label>
         <div class="col-sm-9">
-            <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir" autofocus>
+            <input type="text" class="form-control" id="tanggal_lahir" name="tanggal_lahir" autofocus>
             <div class="invalid-feedback error-tanggal_lahir"></div>
         </div>
     </div>
@@ -162,6 +170,14 @@
                         $('#nama_lengkap').removeClass('is-invalid');
                         $('#nama_lengkap').addClass('is-valid');
                     }
+                    if (err.error_jabatan) {
+                        $('.error-jabatan').html(err.error_jabatan);
+                        $('#jabatan').addClass('is-invalid');
+                    } else {
+                        $('.error-jabatan').html('');
+                        $('#jabatan').removeClass('is-invalid');
+                        $('#jabatan').addClass('is-valid');
+                    }
                     if (err.error_alamat) {
                         $('.error-alamat').html(err.error_alamat);
                         $('#alamat').addClass('is-invalid');
@@ -250,7 +266,7 @@
                         title: 'Berhasil',
                         text: response.success,
                     }).then((value) => {
-                        $('#tabel').DataTable().ajax.reload();
+                        // $('#tabel').DataTable().ajax.reload();
                         Toast.fire({
                             icon: 'success',
                             title: response.success
@@ -280,6 +296,9 @@
         $("#pendidikan").select2({
             theme: "bootstrap-5",
             dropdownParent: $('#my-modal')
+        });
+        $('#tanggal_lahir').datepicker({
+            format: "yyyy-mm-dd"
         });
 
     })

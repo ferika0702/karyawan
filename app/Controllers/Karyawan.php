@@ -6,6 +6,7 @@ use App\Models\KaryawanModel;
 use App\Models\UserModel;
 use CodeIgniter\RESTful\ResourceController;
 use \Hermawan\DataTables\DataTable;
+use Myth\Auth\Password;
 
 class Karyawan extends ResourceController
 {
@@ -158,6 +159,7 @@ class Karyawan extends ResourceController
                     $error = [
                         'error_nik' => $validation->getError('nik'),
                         'error_nama_lengkap' => $validation->getError('nama_lengkap'),
+                        'error_jabatan' => $validation->getError('jabatan'),
                         'error_alamat' => $validation->getError('alamat'),
                         'error_jenis_kelamin' => $validation->getError('jenis_kelamin'),
                         'error_tempat_lahir' => $validation->getError('tempat_lahir'),
@@ -167,16 +169,17 @@ class Karyawan extends ResourceController
                         'error_no_telp' => $validation->getError('no_telp'),
                         'error_email' => $validation->getError('email'),
                         'error_username' => $validation->getError('username'),
-                        'error_assword' => $validation->getError('password'),
+                        'error_password' => $validation->getError('password'),
                     ];
-
                     $json = [
                         'error' => $error
                     ];
                 }else{
                     $modelKaryawan = new KaryawanModel();
-
+                    $modelUser = new UserModel();
                     $data1 = [
+                        'id_grup' => 1,
+                        'id_divisi' => 1,
                         'nik' => $this->request->getPost('nik'),
                         'jabatan' => $this->request->getPost('jabatan'),
                         'nama_lengkap' => $this->request->getPost('nama_lengkap'),
@@ -189,16 +192,15 @@ class Karyawan extends ResourceController
                         'no_telp' => $this->request->getPost('no_telp'),
                         'email' => $this->request->getPost('email'),
                     ];
+                    
                     $modelKaryawan->save($data1);
-
-                    $modelUser = new UserModel();
 
                     $data2 = [
                         'id_karyawan' => $modelKaryawan->getInsertID(),
-                        'name' => $this->request->getPost('name'),
+                        'name' => $this->request->getPost('nama_lengkap'),
                         'email' => $this->request->getPost('email'),
                         'username' => $this->request->getPost('username'),
-                        'password' => Password::hash($this->request->getPost('password')),
+                        'password_hash' => Password::hash($this->request->getPost('password')),
                     ];
                     $modelUser->save($data2);
 
@@ -236,6 +238,7 @@ class Karyawan extends ResourceController
 
     public function update($id = null)
     {
+        
         $validasi = [
             'nik'  => [
                 'rules'     => 'required',
@@ -306,11 +309,11 @@ class Karyawan extends ResourceController
         ];
 
         if (!$this->validate($validasi)) {
-            return redirect()->to('karyawan/'.$id.'')->withInput();
             $validation = \Config\Services::validation();
-
+            
             $error = [
                 'error_nik' => $validation->getError('nik'),
+                'error_jabatan' => $validation->getError('jabatan'),
                 'error_nama_lengkap' => $validation->getError('nama_lengkap'),
                 'error_alamat' => $validation->getError('alamat'),
                 'error_jenis_kelamin' => $validation->getError('jenis_kelamin'),
@@ -321,14 +324,16 @@ class Karyawan extends ResourceController
                 'error_no_telp' => $validation->getError('no_telp'),
                 'error_email' => $validation->getError('email'),
             ];
+            
             $json = [
                 'error' => $error
             ];
+            
         }else{
             $modelKaryawan = new KaryawanModel();
-            $karyawan      = $modelKaryawan->find($id);
-            if ($this->request->isAJAX()){
+            
             $data = [
+                'id' => $id,
                 'nik' => $this->request->getPost('nik'),
                 'jabatan' => $this->request->getPost('jabatan'),
                 'nama_lengkap' => $this->request->getPost('nama_lengkap'),
@@ -342,10 +347,12 @@ class Karyawan extends ResourceController
                 'email' => $this->request->getPost('email'),
             ];
             $modelKaryawan->save($data);
+            $json = [
+                'success' => 'Berhasil Update data karyawan'
+            ];
+        //}
         }
-    }
-        session()->setFlashdata('pesan','Data Berhasil diedit');
-        return redirect()->to('/karyawan')->withInput();
+        echo json_encode($json);
     }
 
 
@@ -355,7 +362,8 @@ class Karyawan extends ResourceController
         $modelUser = new UserModel();
 
         $modelKaryawan->delete($id);
-        $modelUser->delete->getById($id);
+        $modelUser->where(['id_karyawan'=>$id])->delete();
+        
 
         session()->setFlashdata('pesan', 'Data berhasil dihapus.');
         return redirect()->to('/karyawan');
