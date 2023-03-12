@@ -1,0 +1,40 @@
+INFO - 2023-03-11 02:12:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-03-11 02:12:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-03-11 02:12:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-03-11 02:12:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-03-11 02:12:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-03-11 02:12:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2023-03-11 02:12:20 --> mysqli_sql_exception: Table 'haebot.provinsi' doesn't exist in C:\xampp\htdocs\haebot\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:295
+Stack trace:
+#0 C:\xampp\htdocs\haebot\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(295): mysqli->query('SELECT `supplie...', 0)
+#1 C:\xampp\htdocs\haebot\vendor\codeigniter4\framework\system\Database\BaseConnection.php(691): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `supplie...')
+#2 C:\xampp\htdocs\haebot\vendor\codeigniter4\framework\system\Database\BaseConnection.php(605): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `supplie...')
+#3 C:\xampp\htdocs\haebot\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `supplie...', Array, false)
+#4 C:\xampp\htdocs\haebot\app\Models\SupplierAlamatModel.php(52): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\haebot\app\Controllers\Supplier.php(154): App\Models\SupplierAlamatModel->getAlamatBySupplier('2')
+#6 C:\xampp\htdocs\haebot\vendor\codeigniter4\framework\system\CodeIgniter.php(934): App\Controllers\Supplier->edit('2')
+#7 C:\xampp\htdocs\haebot\vendor\codeigniter4\framework\system\CodeIgniter.php(499): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Supplier))
+#8 C:\xampp\htdocs\haebot\vendor\codeigniter4\framework\system\CodeIgniter.php(368): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\haebot\public\index.php(67): CodeIgniter\CodeIgniter->run()
+#10 C:\xampp\htdocs\haebot\vendor\codeigniter4\framework\system\Commands\Server\rewrite.php(47): require_once('C:\\xampp\\htdocs...')
+#11 {main}
+CRITICAL - 2023-03-11 02:12:20 --> Table 'haebot.provinsi' doesn't exist
+in SYSTEMPATH\Database\BaseConnection.php on line 645.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1616): CodeIgniter\Database\BaseConnection->query('SELECT `supplier_alamat`.*, `provinsi`.`nama` as `provinsi`, `kota`.`nama` as `kota`, `kecamatan`.`nama` as `kecamatan`, `kelurahan`.`nama` as `kelurahan`
+FROM `supplier_alamat`
+LEFT JOIN `provinsi` ON `supplier_alamat`.`id_provinsi` = `provinsi`.`id`
+LEFT JOIN `kota` ON `supplier_alamat`.`id_kota` = `kota`.`id`
+LEFT JOIN `kecamatan` ON `supplier_alamat`.`id_kecamatan` = `kecamatan`.`id`
+LEFT JOIN `kelurahan` ON `supplier_alamat`.`id_kelurahan` = `kelurahan`.`id`
+WHERE `supplier_alamat`.`id_supplier` = :supplier_alamat.id_supplier:', [...], false)
+ 2 APPPATH\Models\SupplierAlamatModel.php(52): CodeIgniter\Database\BaseBuilder->get()
+ 3 APPPATH\Controllers\Supplier.php(154): App\Models\SupplierAlamatModel->getAlamatBySupplier('2')
+ 4 SYSTEMPATH\CodeIgniter.php(934): App\Controllers\Supplier->edit('2')
+ 5 SYSTEMPATH\CodeIgniter.php(499): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Supplier))
+ 6 SYSTEMPATH\CodeIgniter.php(368): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('FCPATH\\index.php')
+INFO - 2023-03-11 02:12:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-03-11 02:13:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-03-11 02:13:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-03-11 02:13:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
